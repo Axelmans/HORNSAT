@@ -15,10 +15,13 @@ class HornBuilder(HORNSATVisitor):
         variables = []
         negation = False
         for char in ctx.getText():
+            # Ignore brackets and OR operator.
             if char in ["(", ")", "|"]:
                 continue
+            # This symbol implies that the complement of the Variable following it was taken.
             elif char == "~":
                 negation = True
+            # Variable.
             else:
                 variables.append(NodeVar(char, negation))
                 negation = False

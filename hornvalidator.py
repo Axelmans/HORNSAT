@@ -4,8 +4,10 @@ from visitor import *
 class HornValidator(Visitor):
 
     def visitNodeVar(self, node: NodeVar):
-        return not node.neg
+        pass
 
+    # A Clause may only contain at most one positive Variable.
+    # Cannot be easily verified by syntax only.
     def visitNodeClause(self, node: NodeClause):
         positive_var_found = False
         for var in node.vars:
@@ -16,6 +18,7 @@ class HornValidator(Visitor):
                 return False
         return True
 
+    # The things mentioned above must of course hold for every Clause in a Formula.
     def visitNodeFormula(self, node: NodeFormula):
         for clause in node.clauses:
             if not clause.accept(self):
